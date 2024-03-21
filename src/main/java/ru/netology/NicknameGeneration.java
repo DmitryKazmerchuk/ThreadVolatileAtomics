@@ -25,14 +25,26 @@ public class NicknameGeneration {
                 if (str.length() == 3 && threeSymbols(str)) {
                     counterSizeThreeAtomic.getAndIncrement();
                 }
+                if (str.length() == 4 && threeSymbols(str)) {
+                    counterSizeFourAtomic.getAndIncrement();
+                }
+                if (str.length() == 5 && threeSymbols(str)) {
+                    counterSizeFiveAtomic.getAndIncrement();
+                }
             }
         }
         );
 
         Thread thread2 = new Thread(() -> {
             for (String str : texts) {
+                if (str.length() == 3 && fourSymbols(str)) {
+                    counterSizeThreeAtomic.getAndIncrement();
+                }
                 if (str.length() == 4 && fourSymbols(str)) {
                     counterSizeFourAtomic.getAndIncrement();
+                }
+                if (str.length() == 5 && fourSymbols(str)) {
+                    counterSizeFiveAtomic.getAndIncrement();
                 }
             }
         }
@@ -40,6 +52,12 @@ public class NicknameGeneration {
 
         Thread thread3 = new Thread(() -> {
             for (String str : texts) {
+                if (str.length() == 3 && fiveSymbols(str)) {
+                    counterSizeThreeAtomic.getAndIncrement();
+                }
+                if (str.length() == 4 && fiveSymbols(str)) {
+                    counterSizeFourAtomic.getAndIncrement();
+                }
                 if (str.length() == 5 && fiveSymbols(str)) {
                     counterSizeFiveAtomic.getAndIncrement();
                 }
@@ -61,9 +79,17 @@ public class NicknameGeneration {
     }
 
     public static boolean threeSymbols(String str) {
-        int j = 0;
-        int i = 1;
-        return str.charAt(j) == str.charAt(i) && str.charAt(i) == str.charAt(i + 1);
+        int count = 0;
+        for (int i = 1; i < str.length(); i++) {
+            int j = i - 1;
+            if(str.charAt(j) == str.charAt(i)){
+                count++;
+            }
+        }
+        if (count == str.length() - 1){
+            return true;
+        }
+        return false;
     }
 
     public static boolean fourSymbols(String str) {
