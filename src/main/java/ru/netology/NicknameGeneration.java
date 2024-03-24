@@ -22,14 +22,18 @@ public class NicknameGeneration {
 
         Thread thread1 = new Thread(() -> {
             for (String str : texts) {
-                if (str.length() == 3 && crBeauty1(str)) {
-                    counterSizeThreeAtomic.getAndIncrement();
-                }
-                if (str.length() == 4 && crBeauty1(str)) {
-                    counterSizeFourAtomic.getAndIncrement();
-                }
-                if (str.length() == 5 && crBeauty1(str)) {
-                    counterSizeFiveAtomic.getAndIncrement();
+                if(crBeautyIdentically(str)) {
+                    switch (str.length()) {
+                        case 3:
+                            counterSizeThreeAtomic.getAndIncrement();
+                            break;
+                        case 4:
+                            counterSizeFourAtomic.getAndIncrement();
+                            break;
+                        case 5:
+                            counterSizeFiveAtomic.getAndIncrement();
+                            break;
+                    }
                 }
             }
         }
@@ -37,14 +41,18 @@ public class NicknameGeneration {
 
         Thread thread2 = new Thread(() -> {
             for (String str : texts) {
-                if (str.length() == 3 && crBeauty2(str)) {
-                    counterSizeThreeAtomic.getAndIncrement();
-                }
-                if (str.length() == 4 && crBeauty2(str)) {
-                    counterSizeFourAtomic.getAndIncrement();
-                }
-                if (str.length() == 5 && crBeauty2(str)) {
-                    counterSizeFiveAtomic.getAndIncrement();
+                if(crBeautyPalindrome(str)) {
+                    switch (str.length()) {
+                        case 3:
+                            counterSizeThreeAtomic.getAndIncrement();
+                            break;
+                        case 4:
+                            counterSizeFourAtomic.getAndIncrement();
+                            break;
+                        case 5:
+                            counterSizeFiveAtomic.getAndIncrement();
+                            break;
+                    }
                 }
             }
         }
@@ -52,14 +60,18 @@ public class NicknameGeneration {
 
         Thread thread3 = new Thread(() -> {
             for (String str : texts) {
-                if (str.length() == 3 && crBeauty3(str)) {
-                    counterSizeThreeAtomic.getAndIncrement();
-                }
-                if (str.length() == 4 && crBeauty3(str)) {
-                    counterSizeFourAtomic.getAndIncrement();
-                }
-                if (str.length() == 5 && crBeauty3(str)) {
-                    counterSizeFiveAtomic.getAndIncrement();
+                if(crBeautySort(str)) {
+                    switch (str.length()) {
+                        case 3:
+                            counterSizeThreeAtomic.getAndIncrement();
+                            break;
+                        case 4:
+                            counterSizeFourAtomic.getAndIncrement();
+                            break;
+                        case 5:
+                            counterSizeFiveAtomic.getAndIncrement();
+                            break;
+                    }
                 }
             }
         }
@@ -78,7 +90,7 @@ public class NicknameGeneration {
         System.out.println("Красивых слов с длиной 5: " + counterSizeFiveAtomic.get() + " шт");
     }
 
-    public static boolean crBeauty1(String str) {
+    public static boolean crBeautyIdentically(String str) {
         int count = 0;
         for (int i = 1; i < str.length(); i++) {
             int j = i - 1;
@@ -86,19 +98,19 @@ public class NicknameGeneration {
                 count++;
             }
         }
-        if (count == str.length() - 1){
+        if (count == str.length()){
             return true;
         }
         return false;
     }
 
-    public static boolean crBeauty2(String str) {
+    public static boolean crBeautyPalindrome(String str) {
         String str1 = str.substring(0, str.length() / 2);
         String str2 = str.substring(str.length() / 2);
         return new StringBuilder(str2).reverse().toString().equals(str1);
     }
 
-    public static boolean crBeauty3(String str) {
+    public static boolean crBeautySort(String str) {
         String sorted = str.chars()
                 .sorted().
                 collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
